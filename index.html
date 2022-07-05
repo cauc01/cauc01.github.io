@@ -14,7 +14,7 @@
 <meta property="og:url" content="http://example.com/index.html">
 <meta property="og:site_name" content="HexoBlog">
 <meta property="og:description" content="���������������">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="Mr.Yang">
 <meta property="article:tag" content="Code">
 <meta name="twitter:card" content="summary">
@@ -46,7 +46,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="" class="js-avatar">
+			<img src="/assets/img/me.jpg" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="/"></a></h1>
@@ -80,7 +80,7 @@
 		<nav class="header-nav">
 			<div class="social">
 				
-					<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+					<a class="github" target="_blank" href="https://hub.fastgit.xyz/cauc01" title="github"><i class="icon-github"></i></a>
 		        
 					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
 		        
@@ -104,7 +104,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="" class="js-avatar">
+				<img src="/assets/img/me.jpg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author"></h1>
@@ -121,7 +121,7 @@
 			<nav class="header-nav">
 				<div class="social">
 					
-						<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+						<a class="github" target="_blank" href="https://hub.fastgit.xyz/cauc01" title="github"><i class="icon-github"></i></a>
 			        
 						<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
 			        
@@ -158,24 +158,24 @@
     <article id="post-我的第一篇博客" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/07/01/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">我的第一篇博客</a>
-    </h1>
-  
-
-        
-        <a href="/2022/07/01/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" class="archive-article-date">
-  	<time datetime="2022-07-01T15:34:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-07-01</time>
-</a>
-        
-      </header>
-    
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>##利用hexo创建博客并部署远端（Windows版本）<br>ps:现有分享大多是基于Linux下进行博客的创建，在codesheep的讲解下，自己总结分享一下Windows下利用hexo创建博客并部署到远端（免费：部署到GitHub）</p>
+<hr>
+<h2 id="第一章-介绍"><a href="#第一章-介绍" class="headerlink" title="第一章.介绍"></a>第一章.介绍</h2><ol>
+<li>Hexo是一个快速、简介且高效的博客框架。使用Markdown解析文章，且速度很快，几秒内就可利用靓丽的主题生成静态网页。更详细的介绍可见<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/e4f06f5a1f62/">https://www.jianshu.com/p/e4f06f5a1f62/</a></li>
+<li>Node.js是创建博客需要搭配的软件，这是运行在服务端的一个JavaScript。下载地址为<a target="_blank" rel="noopener" href="https://nodejs.org/en/">https://nodejs.org/en/</a>,下载安装成功后有两个组件，分别是Nodejs和npm。</li>
+<li>Vim是一个类似于Vi的著名的功能强大、高度可定制的文本编辑器，通俗点类似于Word、记事本等文本编辑器。</li>
+<li>Git是分布式版本控制系统，git通常在编程中会用到，并且git支持分布式部署，可以有效、高速的处理从很小到非常大的项目版本管理。分布式相比于集中式的最大区别在于开发者可以提交到本地，每个开发者通过克隆（git clone），在本地机器上拷贝一个完整的Git仓库。<br>参考文章<a target="_blank" rel="noopener" href="https://www.php.cn/tool/git/412871.html">https://www.php.cn/tool/git/412871.html</a> 举例子：比如当你在本地写好某一个编程文档时，发现有些地方需要修改或者删除，有的人可能会直接在当前文件中直接修改，有的人会复制一份在上面修改，然后删除没用的文件。但是当你发现还是原来的文件好或者另外的版本好时，就可能手足无措了。此时使用git工具，就是聪明之举了。我们可以在本地建一个版本库（仓库即repository，对应GitHub上面的仓库），每当我们需要修改时，就可以把之前的版本提交并标明此版的特点。这样文件夹里就只有一个编程文档了。当你需要哪个版本时，只要在版本库中恢复一下就可以了。</li>
+</ol>
+<hr>
+<h2 id="第二章-安装软件、创建博客并部署远程"><a href="#第二章-安装软件、创建博客并部署远程" class="headerlink" title="第二章.安装软件、创建博客并部署远程"></a>第二章.安装软件、创建博客并部署远程</h2><ol>
+<li>Vim在安装时要注意安装路径，后期需要自己配置环境变量。例如我的Vim安装路径为D:\Blog\Vim，然后安装好后，找到D:\Blog\Vim\vim81这个路径，复制粘贴来配置环境路径。</li>
+<li>打开终端Win+R，输入cmd，切换到root用户权限。命令是runas /user:用户名 cmd<br>或者直接搜索框搜索cmd，然后以管理员身份运行即可。</li>
+</ol>
+<hr>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a target="_blank" rel="noopener" href="http://www.codesheep.cn/">www.codesheep.cn</a></p>
+
       
 
       
@@ -433,15 +433,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
         <ul class="search-ul">
           
             <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接1</a>
+              <a href="https://www.bilibili.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接1</a>
             </li>
           
             <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接2</a>
+              <a href="https://blog.csdn.net/wangshuaiwsws95/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接2</a>
             </li>
           
             <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接3</a>
+              <a href="https://www.zhihu.com/people/code_sheep/posts" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接3</a>
             </li>
           
             <li class="search-li">
@@ -464,7 +464,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">很惭愧&lt;br&gt;&lt;br&gt;只做了一点微小的工作&lt;br&gt;谢谢大家</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">初出茅庐的普通小码农&lt;br&gt;很惭愧&lt;br&gt;&lt;br&gt;只做了一点微小的工作&lt;br&gt;谢谢大家</div>
   	  	
     	</section>
     
