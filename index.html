@@ -221,7 +221,105 @@ int main(int argc, char** argv) &#123;
 &#125;
 </code></pre>
 <hr>
-<h2 id="2"><a href="#2" class="headerlink" title="2."></a>2.</h2>
+<h2 id="2-逐层改进的斐波拉契数列–引入动态规划的思想"><a href="#2-逐层改进的斐波拉契数列–引入动态规划的思想" class="headerlink" title="2.逐层改进的斐波拉契数列–引入动态规划的思想"></a>2.<a target="_blank" rel="noopener" href="https://blog.csdn.net/ATFWUS/article/details/104854533">逐层改进的斐波拉契数列–引入动态规划的思想</a></h2><h3 id="2-1-原始暴力递归方法"><a href="#2-1-原始暴力递归方法" class="headerlink" title="2.1 原始暴力递归方法"></a>2.1 原始暴力递归方法</h3><pre><code>int Fibonacci(int n)
+&#123;
+    if (n == 1 || n == 2)
+    &#123;
+        return 1;
+    &#125;
+    return Fibonacci(n - 1) + Fibonacci(n - 2);
+&#125;
+</code></pre>
+<p>看一下这个时间复杂度，这个算法的时间复杂度主要由递归产生，每一次调用仅进行了加法和递归调用的操作，总共调用2的n次方次，那么这个时间复杂度是  O(2^{n}) O(n)，指数级别<br>我们模拟一下算法运行，加入传入50，那么先会递归调用49，48，49又会递归调用48，47，48又会递归调用46，47，，等等，你是不是已经发现了啥，没错，那就是48，47被反复得调用了，我们得目的最多只需要知道47，或者48，但是在这个递归调用得过程中，它被反复得调用了，这也就产生了很多不必要得重复，提升了时间复杂度，我们习惯称这种问题为：<strong>最小重叠子问题</strong>。</p>
+<h3 id="2-2-改进1–标记已求解"><a href="#2-2-改进1–标记已求解" class="headerlink" title="2.2 改进1–标记已求解"></a>2.2 改进1–标记已求解</h3><p>把已经求出的中间问题标记起来，每当我们需要递归之前，先查询一下这个问题是否已经被解决，如果被解决，直接来拿用，如果没有，那么再进行递归，代码如下：</p>
+<pre><code>int Fibonacci(int n)
+&#123;
+    if (n &lt; 1)
+        return 0;
+    int *flag = (int*)calloc((n + 1),sizeof(int));//动态初始化一个数组
+    return checker(flag, n);
+&#125;
+ 
+int checker(int* flag, int n)
+&#123;
+    if (n == 1 || n == 2)
+        return 1;
+    if (flag[n])//存在
+        return flag[n];
+    flag[n] = checker(flag,n-1) + checker(flag,n-2);//不存在则计算
+    return flag[n];
+&#125;
+</code></pre>
+<p>这个算法不存在重复计算子问题的说法，所以，它的时间复杂度就是 O(n)。</p>
+<h3 id="2-3-改进2–一维基本动态规划"><a href="#2-3-改进2–一维基本动态规划" class="headerlink" title="2.3 改进2–一维基本动态规划"></a>2.3 改进2–一维基本动态规划</h3><p>上述递归的做法是从n到1，2，既然有了这个思想，我们就可以从1，一直迭代到n，也就是基本动态规划的思想。代码如下：</p>
+<pre><code>int Fibonacci(int n)
+&#123;
+    int* dp = (int*)calloc(n, sizeof(int));
+    if (n == 1||n==2)
+        return 1;
+    dp[0] = dp[1] = 1;
+    for (int i = 2; i &lt; n; i++)
+    &#123;
+        dp[i] = dp[i - 1] + dp[i - 2];
+    &#125;
+    return dp[n-1];
+&#125;
+</code></pre>
+<h3 id="2-4-改进3–优化的动态规划"><a href="#2-4-改进3–优化的动态规划" class="headerlink" title="2.4 改进3–优化的动态规划"></a>2.4 改进3–优化的动态规划</h3><p>可以思考一下用这个长度为n的数组的目的，就是为了记录每一次迭代出来的值，但实际上我们使用了所有的值嘛，并没有，我们在一次循环中，只使用了两个dp数组中的值，这两个值其实是可以用变量来代替的，只需要不断的更新就行了，这样，空间复杂度就可以降为 O(1)。代码如下：</p>
+<pre><code>int Fibonacci(int n)
+&#123;
+    if (n == 1 || n == 2)
+        return 1;
+    int pre=1, cur=1;//前两次迭代的结果和前一次迭代的结果
+    int sum;//本次的值
+    for (int i = 2; i &lt; n; i++)
+    &#123;
+        sum = pre + cur;
+        pre = cur;
+        cur = sum;
+    &#125;
+    return cur;
+&#125;
+</code></pre>
+<p>这样的动态规划算法时间和空间复杂度就最低，优化到了极致。这样使用的动态规划，才是真的用好了动态规划！！！</p>
+<h2 id="启发"><a href="#启发" class="headerlink" title="启发"></a>启发</h2><ol>
+<li>动态规划其实就是解决最小重叠子问题的一个方法。</li>
+<li>动态规划的关键是找准迭代表达式（也叫状态转移方程）和初始条件（也叫基准）。</li>
+<li>迭代表达式可以从递归中获取思路。</li>
+<li>初始条件往往是递归从后向前的结束条件。</li>
+<li>递归优化的过程，就是动态规划的逆向过程。</li>
+<li>动态规划的空间复杂度往往是可以考虑优化的。</li>
+</ol>
+<p>利用最优动态规划来输出斐波拉契数列，代码如下：</p>
+<pre><code>#include&lt;stdio.h&gt;
+#define N 6        //宏定义
+int Fibonacci(int n)&#123;
+    if(n==1||n==2)
+        return 1;
+    int pre=1,cur=1;    //前两次迭代的结果和前一次迭代的结果
+    int sum;    //本次的值
+    for(int i=2;i&lt;n;i++)&#123;
+        sum=pre+cur;
+        pre=cur;
+        cur=sum;
+    &#125;
+    return cur; 
+&#125;
+int main()&#123;
+    int out=Fibonacci(N);
+    printf(&quot;%d&quot;,out);
+    //将Fibonacci输出
+    int a[N];
+    for(int j=0;j&lt;N;j++)&#123;
+        a[j]=Fibonacci(j+1);    //这里是因为斐波那契数列从1开始，1 1 2 3 5... 
+    &#125;
+    printf(&quot;\n---------\n&quot;);
+    for(int j=0;j&lt;N;j++)&#123;
+        printf(&quot;%d &quot;,a[j]);
+    &#125; 
+&#125;
+</code></pre>
+
       
 
       
