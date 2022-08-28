@@ -319,6 +319,56 @@ int main()&#123;
     &#125; 
 &#125;
 </code></pre>
+<hr>
+<h2 id="3-零钱兑换问题"><a href="#3-零钱兑换问题" class="headerlink" title="3.零钱兑换问题"></a>3.<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/coin-change/">零钱兑换问题</a></h2><p>给你一个整数数组 coins ，表示不同面额的硬币；以及一个整数 amount ，表示总金额。<br>计算并返回可以凑成总金额所需的 最少的硬币个数 。如果没有任何一种硬币组合能组成总金额，返回 -1 。<br>你可以认为每种硬币的数量是无限的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line"></span><br><span class="line">输入：coins = [1, 2, 5], amount = 11</span><br><span class="line"></span><br><span class="line">输出：3 </span><br><span class="line"></span><br><span class="line">解释：11 = 5 + 5 + 1</span><br></pre></td></tr></table></figure>
+
+<p>规律：凑齐的钱数=1个硬币面值+（凑齐的总钱数-当前硬币面值）</p>
+<p>那么：凑齐前钱数的硬币数=1个硬币+凑齐[总钱数-硬币面值]所需的最小硬币数</p>
+<p>由于硬币面值有多个，因此：凑齐钱数的硬币数=[1个硬币+凑齐[总钱数-当前硬币面值]所需的最小硬币数]的最小值<br>分析如图：</p>
+<div align="center">
+<img src="/2022/08/26/%E5%8A%9B%E6%89%A3/零钱兑换01.jpg" width="65%">
+<img src="/2022/08/26/%E5%8A%9B%E6%89%A3/零钱兑换02.jpg" width="65%">
+</div> 
+
+<pre><code>#include&lt;stdio.h&gt;
+#define N 3
+**#include &lt;limits.h&gt;    //这个头文件里面有最大值INT_MAX=2^31-1和最小值INT_MIN**
+int min_fun(int a,int b)&#123;    //自定义最小函数
+    int c;
+    c=a&lt;b?a:b;
+    return c;
+&#125; 
+int coinChange(int* coins,int coinsSize, int amount)&#123;    //动态规划整体
+    int f[amount+1];    //存放每次兑换面额amount所需的最少硬币数的数组，因为用到面额0的情况，所以数组大小+1
+    f[0]=0;        //后期迭代会用到f[0]，兑换面额为0所需最少硬币数为0 
+    for(int i=1;i&lt;=amount;i++)&#123;        //从1到目标金额循环 
+        f[i]=INT_MAX;    //因为求最少硬币数，INT_MAX表示所有数，是最大的，取不到
+        for(int j=0;j&lt;coinsSize;j++)&#123;    //从小到大遍历硬币面额 
+            if(i&gt;=coins[j]&amp;&amp;f[i-coins[j]]!=INT_MAX)&#123;    //f[i-coins[j]]表示最少用多少枚硬币拼出i-a[j],即当前面额i减当前硬币价值所需最少硬币 
+                f[i]=min_fun(f[i],f[i-coins[j]]+1);
+            &#125; 
+        &#125;
+    &#125;
+    if(f[amount]==INT_MAX)&#123;
+        f[amount]=-1;
+    &#125;
+    return f[amount];     //f[amount]表示兑换面额amount所需的最少硬币
+&#125;
+int main()&#123;        //主函数
+    int coins[N];
+    printf(&quot;请输入不同面额的硬币\n&quot;);
+    for(int i=0;i&lt;N;i++)&#123;
+        scanf(&quot;%d&quot;,&amp;coins[i]);
+    &#125;
+    printf(&quot;请输入要兑换的金额\n&quot;);
+    int amount;
+    scanf(&quot;%d&quot;,&amp;amount);
+    int out=coinChange(coins,N,amount);
+    printf(&quot;凑成总金额%d所需的最少的硬币个数为：%d\n&quot;,amount,out);
+&#125;
+</code></pre>
+<hr>
 
       
 
