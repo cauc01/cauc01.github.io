@@ -2,44 +2,44 @@
 <html>
 <head>
   <meta charset="utf-8">
-  
+  <%
+  var title = page.title;
+
+  if (is_archive()){
+    title = 'Archives';
+
+    if (is_month()){
+      title += ': ' + page.year + '/' + page.month;
+    } else if (is_year()){
+      title += ': ' + page.year;
+    }
+  } else if (is_category()){
+    title = 'Category: ' + page.category;
+  } else if (is_tag()){
+    title = 'Tag: ' + page.tag;
+  }
+  %>
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://example.com">
-  <title>力扣 | HexoBlog</title>
+  <link rel="dns-prefetch" href="<%= config.url %>">
+  <title><% if (title){ %><%= title %> | <% } %><%= config.title %></title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="作为一个程序员，算法能力必不可少，虽然不一定是算法工程师，但是算法还是彰显着个人的编码能力，面试中也经常会被问到，甚至会被要求临场做算法题，所以，还是好好积累吧！  1.打家劫舍问题（动态规划DP）你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。 给定一个代表每个">
-<meta property="og:type" content="article">
-<meta property="og:title" content="力扣">
-<meta property="og:url" content="http://example.com/2022/08/26/%E5%8A%9B%E6%89%A3/index.html">
-<meta property="og:site_name" content="HexoBlog">
-<meta property="og:description" content="作为一个程序员，算法能力必不可少，虽然不一定是算法工程师，但是算法还是彰显着个人的编码能力，面试中也经常会被问到，甚至会被要求临场做算法题，所以，还是好好积累吧！  1.打家劫舍问题（动态规划DP）你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。 给定一个代表每个">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2022/08/26/%E5%8A%9B%E6%89%A3/零钱兑换01.jpg">
-<meta property="og:image" content="http://example.com/2022/08/26/%E5%8A%9B%E6%89%A3/零钱兑换02.jpg">
-<meta property="article:published_time" content="2022-08-26T13:39:28.000Z">
-<meta property="article:modified_time" content="2022-08-30T06:55:44.410Z">
-<meta property="article:author" content="Mr.Yang">
-<meta property="article:tag" content="精选基础算法100题（面试必备）">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2022/08/26/%E5%8A%9B%E6%89%A3/零钱兑换01.jpg">
-  
-    <link rel="alternative" href="/atom.xml" title="HexoBlog" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/img/favicon.ico">
-  
-  <link rel="stylesheet" type="text/css" href="/./main.0cf68a.css">
+  <%- open_graph({twitter_id: theme.twitter, google_plus: theme.google_plus, fb_admins: theme.fb_admins, fb_app_id: theme.fb_app_id}) %>
+  <% if (theme.rss){ %>
+    <link rel="alternative" href="<%- theme.rss %>" title="<%= config.title %>" type="application/atom+xml">
+  <% } %>
+  <% if (theme.favicon){ %>
+    <link rel="icon" href="<%/img/favicon.ico %>">
+  <% } %>
+  <%- partial('css') %>
   <style type="text/css">
-  
+  <% var defaultCtnBg = 'linear-gradient(200deg,#a0cfe4,#e8c37e)' %>
     #container.show {
-      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+      background: <%= theme.style && theme.style.slider ? theme.style.slider : defaultCtnBg %>;
     }
   </style>
-  
-
-  
-
+  <%- partial('google-analytics') %>
+  <%- partial('baidu-analytics') %>
 <meta name="generator" content="Hexo 5.4.2"></head>
 
 <body>
