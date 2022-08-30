@@ -2,50 +2,44 @@
 <html>
 <head>
   <meta charset="utf-8">
-  
+  <%
+  var title = page.title;
+
+  if (is_archive()){
+    title = 'Archives';
+
+    if (is_month()){
+      title += ': ' + page.year + '/' + page.month;
+    } else if (is_year()){
+      title += ': ' + page.year;
+    }
+  } else if (is_category()){
+    title = 'Category: ' + page.category;
+  } else if (is_tag()){
+    title = 'Tag: ' + page.tag;
+  }
+  %>
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://example.com">
-  <title>利用hexo创建博客并部署远端（Windows版本） | HexoBlog</title>
+  <link rel="dns-prefetch" href="<%= config.url %>">
+  <title><% if (title){ %><%= title %> | <% } %><%= config.title %></title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="现有分享大多是基于Linux下进行博客的创建，在codesheep的讲解下，自己总结分享一下Windows下利用hexo创建博客并部署到远端（免费：部署到GitHub）  第一章.介绍 Hexo是一个快速、简介且高效的博客框架。使用Markdown解析文章，且速度很快，几秒内就可利用靓丽的主题生成静态网页。更详细的介绍可见https:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;e4f06f5a1f62">
-<meta property="og:type" content="article">
-<meta property="og:title" content="利用hexo创建博客并部署远端（Windows版本）">
-<meta property="og:url" content="http://example.com/2022/07/05/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/index.html">
-<meta property="og:site_name" content="HexoBlog">
-<meta property="og:description" content="现有分享大多是基于Linux下进行博客的创建，在codesheep的讲解下，自己总结分享一下Windows下利用hexo创建博客并部署到远端（免费：部署到GitHub）  第一章.介绍 Hexo是一个快速、简介且高效的博客框架。使用Markdown解析文章，且速度很快，几秒内就可利用靓丽的主题生成静态网页。更详细的介绍可见https:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;e4f06f5a1f62">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2022/07/05/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/Vim环境变量路径配置.jpg">
-<meta property="og:image" content="http://example.com/2022/07/05/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/插入本地图片.png">
-<meta property="og:image" content="http://example.com/2022/07/05/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/hexos生成本地链接.png">
-<meta property="og:image" content="http://example.com/2022/07/05/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/GitHub新建仓库.png">
-<meta property="og:image" content="http://example.com/2022/07/05/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/GitHub创建仓库注意.png">
-<meta property="og:image" content="http://example.com/2022/07/05/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/根目录配置文件.png">
-<meta property="og:image" content="http://example.com/2022/07/05/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/后期补充博客内容.png">
-<meta property="og:image" content="http://example.com/2022/07/05/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/git%20bash%20here.png">
-<meta property="article:published_time" content="2022-07-04T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-07-07T04:56:11.441Z">
-<meta property="article:author" content="Mr.Yang">
-<meta property="article:tag" content="Code">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2022/07/05/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/Vim环境变量路径配置.jpg">
-  
-    <link rel="alternative" href="/atom.xml" title="HexoBlog" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  <link rel="stylesheet" type="text/css" href="/./main.0cf68a.css">
+  <%- open_graph({twitter_id: theme.twitter, google_plus: theme.google_plus, fb_admins: theme.fb_admins, fb_app_id: theme.fb_app_id}) %>
+  <% if (theme.rss){ %>
+    <link rel="alternative" href="<%- theme.rss %>" title="<%= config.title %>" type="application/atom+xml">
+  <% } %>
+  <% if (theme.favicon){ %>
+    <link rel="icon" href="<%- theme.favicon %>">
+  <% } %>
+  <%- partial('css') %>
   <style type="text/css">
-  
+  <% var defaultCtnBg = 'linear-gradient(200deg,#a0cfe4,#e8c37e)' %>
     #container.show {
-      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+      background: <%= theme.style && theme.style.slider ? theme.style.slider : defaultCtnBg %>;
     }
   </style>
-  
-
-  
-
+  <%- partial('google-analytics') %>
+  <%- partial('baidu-analytics') %>
 <meta name="generator" content="Hexo 5.4.2"></head>
 
 <body>
@@ -93,9 +87,9 @@
 				
 					<a class="github" target="_blank" href="https://hub.fastgit.xyz/cauc01" title="github"><i class="icon-github"></i></a>
 		        
-					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
+					<a class="weibo" target="_blank" href="https://weibo.com/u/6764167023" title="weibo"><i class="icon-weibo"></i></a>
 		        
-					<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
+					<a class="zhihu" target="_blank" href="https://www.zhihu.com/" title="zhihu"><i class="icon-zhihu"></i></a>
 		        
 					<a class="qq" target="_blank" href="/assets/img/qqhao.jpg" title="qq"><i class="icon-qq"></i></a>
 		        
@@ -136,9 +130,9 @@
 					
 						<a class="github" target="_blank" href="https://hub.fastgit.xyz/cauc01" title="github"><i class="icon-github"></i></a>
 			        
-						<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
+						<a class="weibo" target="_blank" href="https://weibo.com/u/6764167023" title="weibo"><i class="icon-weibo"></i></a>
 			        
-						<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/" title="zhihu"><i class="icon-zhihu"></i></a>
 			        
 						<a class="qq" target="_blank" href="/assets/img/qqhao.jpg" title="qq"><i class="icon-qq"></i></a>
 			        
@@ -179,6 +173,17 @@
     </h1>
   
 
+        <!--显示阅读次数-->
+        
+          <br/>
+          <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+          <span class="icon-sort"></span>
+          <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+                    阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
+          </span>
+          </a>
+       
+       <!--显示阅读次数完毕-->
         
         <a href="/2022/07/05/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" class="archive-article-date">
   	<time datetime="2022-07-04T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-07-05</time>
@@ -315,7 +320,10 @@
       
 
       
-        
+        <%
+  var sUrl = url.replace(/index\.html$/, '');
+  sUrl = /^(http:|https:)\/\//.test(sUrl) ? sUrl : 'http:' + sUrl;
+%>
 <div class="share-btn share-icons tooltip-left">
   <div class="tooltip tooltip-east">
     <span class="tooltip-item">
@@ -360,7 +368,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2022/07/05/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" alt="微信分享二维码">
+      <img src="<%- 'qrcode' in locals ? qrcode(sUrl) : '//pan.baidu.com/share/qrcode?url=' + sUrl  %>" alt="微信分享二维码">
     </div>
 </div>
 
@@ -373,15 +381,6 @@
 
   
 <nav id="article-nav">
-  
-    <a href="/2022/08/26/%E5%8A%9B%E6%89%A3/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          力扣
-        
-      </div>
-    </a>
   
   
     <a href="/2022/07/01/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
@@ -509,10 +508,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">精选基础算法100题（面试必备）</a>
-              </li>
             
             <div class="clearfix"></div>
           </ul>

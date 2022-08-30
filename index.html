@@ -2,39 +2,44 @@
 <html>
 <head>
   <meta charset="utf-8">
-  
+  <%
+  var title = page.title;
+
+  if (is_archive()){
+    title = 'Archives';
+
+    if (is_month()){
+      title += ': ' + page.year + '/' + page.month;
+    } else if (is_year()){
+      title += ': ' + page.year;
+    }
+  } else if (is_category()){
+    title = 'Category: ' + page.category;
+  } else if (is_tag()){
+    title = 'Tag: ' + page.tag;
+  }
+  %>
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://example.com">
-  <title>HexoBlog</title>
+  <link rel="dns-prefetch" href="<%= config.url %>">
+  <title><% if (title){ %><%= title %> | <% } %><%= config.title %></title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="���������������">
-<meta property="og:type" content="website">
-<meta property="og:title" content="HexoBlog">
-<meta property="og:url" content="http://example.com/index.html">
-<meta property="og:site_name" content="HexoBlog">
-<meta property="og:description" content="���������������">
-<meta property="og:locale" content="zh_CN">
-<meta property="article:author" content="Mr.Yang">
-<meta property="article:tag" content="Code">
-<meta name="twitter:card" content="summary">
-  
-    <link rel="alternative" href="/atom.xml" title="HexoBlog" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  <link rel="stylesheet" type="text/css" href="/./main.0cf68a.css">
+  <%- open_graph({twitter_id: theme.twitter, google_plus: theme.google_plus, fb_admins: theme.fb_admins, fb_app_id: theme.fb_app_id}) %>
+  <% if (theme.rss){ %>
+    <link rel="alternative" href="<%- theme.rss %>" title="<%= config.title %>" type="application/atom+xml">
+  <% } %>
+  <% if (theme.favicon){ %>
+    <link rel="icon" href="<%- theme.favicon %>">
+  <% } %>
+  <%- partial('css') %>
   <style type="text/css">
-  
+  <% var defaultCtnBg = 'linear-gradient(200deg,#a0cfe4,#e8c37e)' %>
     #container.show {
-      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+      background: <%= theme.style && theme.style.slider ? theme.style.slider : defaultCtnBg %>;
     }
   </style>
-  
-
-  
-
+  <%- partial('google-analytics') %>
+  <%- partial('baidu-analytics') %>
 <meta name="generator" content="Hexo 5.4.2"></head>
 
 <body>
@@ -82,9 +87,9 @@
 				
 					<a class="github" target="_blank" href="https://hub.fastgit.xyz/cauc01" title="github"><i class="icon-github"></i></a>
 		        
-					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
+					<a class="weibo" target="_blank" href="https://weibo.com/u/6764167023" title="weibo"><i class="icon-weibo"></i></a>
 		        
-					<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
+					<a class="zhihu" target="_blank" href="https://www.zhihu.com/" title="zhihu"><i class="icon-zhihu"></i></a>
 		        
 					<a class="qq" target="_blank" href="/assets/img/qqhao.jpg" title="qq"><i class="icon-qq"></i></a>
 		        
@@ -125,9 +130,9 @@
 					
 						<a class="github" target="_blank" href="https://hub.fastgit.xyz/cauc01" title="github"><i class="icon-github"></i></a>
 			        
-						<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
+						<a class="weibo" target="_blank" href="https://weibo.com/u/6764167023" title="weibo"><i class="icon-weibo"></i></a>
 			        
-						<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/" title="zhihu"><i class="icon-zhihu"></i></a>
 			        
 						<a class="qq" target="_blank" href="/assets/img/qqhao.jpg" title="qq"><i class="icon-qq"></i></a>
 			        
@@ -159,165 +164,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-力扣" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/08/26/%E5%8A%9B%E6%89%A3/">力扣</a>
-    </h1>
-  
-
-        
-        <a href="/2022/08/26/%E5%8A%9B%E6%89%A3/" class="archive-article-date">
-  	<time datetime="2022-08-26T13:39:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-08-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>作为一个程序员，算法能力必不可少，虽然不一定是算法工程师，但是算法还是彰显着个人的编码能力，面试中也经常会被问到，甚至会被要求临场做算法题，所以，还是好好积累吧！</p>
-<hr>
-<h2 id="1-打家劫舍问题（动态规划DP）"><a href="#1-打家劫舍问题（动态规划DP）" class="headerlink" title="1.打家劫舍问题（动态规划DP）"></a>1.<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/house-robber/">打家劫舍问题（动态规划DP）</a></h2><p>你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。</p>
-<p>给定一个代表每个房屋存放金额的非负整数数组，计算你 不触动警报装置的情况下 ，一夜之内能够偷窃到的最高金额。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">示例1</span><br><span class="line">输入：[1,2,3,1]</span><br><span class="line">输出：4</span><br><span class="line">解释：偷窃 1 号房屋 (金额 = 1) ，然后偷窃 3 号房屋 (金额 = 3)。</span><br><span class="line">     偷窃到的最高金额 = 1 + 3 = 4 。</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;math.h&gt; //fmax()函数 </span><br><span class="line">#include&lt;cstring&gt;	//strlen()函数 </span><br><span class="line">#define N 4</span><br><span class="line">/* run this program using the console pauser or add your own getch, system(&quot;pause&quot;) or input loop </span><br><span class="line">   1、sizeof是运算符，strlen是C语言标准库函数。</span><br><span class="line">   2、strlen 测量的是字符串的实际长度，以’\0’ 结束，返回结果不包括’\0’ 。</span><br><span class="line">   3、而sizeof 测量的是字符的分配大小，它的参数可以是数组、指针、类型、对象、函数等。</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">int rob(int* nums, int numsSize)&#123;</span><br><span class="line">if (numsSize == 1) &#123;</span><br><span class="line">return *nums;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int dp[numsSize];</span><br><span class="line">dp[0] = nums[0];</span><br><span class="line">dp[1] = fmax(nums[0], nums[1]);</span><br><span class="line">for (int i = 2; i &lt; numsSize; i++) &#123;</span><br><span class="line">dp[i] = fmax(dp[i - 2] + nums[i], dp[i - 1]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">return fmax(dp[numsSize - 1], dp[numsSize - 2]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, char** argv) &#123;</span><br><span class="line">	int a[N];</span><br><span class="line">	for(int i=0;i&lt;N;i++)&#123;	//这里如果是sizeof(a)则在键盘键入时需要输入一个字符才出结果，length(a)不可用，是求字符串长度 </span><br><span class="line">		scanf(&quot;%d&quot;,&amp;a[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	int max=rob(a,N);</span><br><span class="line">	printf(&quot;%d&quot;,max);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="2-逐层改进的斐波拉契数列–引入动态规划的思想"><a href="#2-逐层改进的斐波拉契数列–引入动态规划的思想" class="headerlink" title="2.逐层改进的斐波拉契数列–引入动态规划的思想"></a>2.<a target="_blank" rel="noopener" href="https://blog.csdn.net/ATFWUS/article/details/104854533">逐层改进的斐波拉契数列–引入动态规划的思想</a></h2><h3 id="2-1-原始暴力递归方法"><a href="#2-1-原始暴力递归方法" class="headerlink" title="2.1 原始暴力递归方法"></a>2.1 原始暴力递归方法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">int Fibonacci(int n)</span><br><span class="line">&#123;</span><br><span class="line">	if (n == 1 || n == 2)</span><br><span class="line">	&#123;</span><br><span class="line">		return 1;</span><br><span class="line">	&#125;</span><br><span class="line">	return Fibonacci(n - 1) + Fibonacci(n - 2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>看一下这个时间复杂度，这个算法的时间复杂度主要由递归产生，每一次调用仅进行了加法和递归调用的操作，总共调用2的n次方次，那么这个时间复杂度是  O(2^{n}) O(n)，指数级别<br>我们模拟一下算法运行，加入传入50，那么先会递归调用49，48，49又会递归调用48，47，48又会递归调用46，47，，等等，你是不是已经发现了啥，没错，那就是48，47被反复得调用了，我们得目的最多只需要知道47，或者48，但是在这个递归调用得过程中，它被反复得调用了，这也就产生了很多不必要得重复，提升了时间复杂度，我们习惯称这种问题为：<strong>最小重叠子问题</strong>。</p>
-<h3 id="2-2-改进1–标记已求解"><a href="#2-2-改进1–标记已求解" class="headerlink" title="2.2 改进1–标记已求解"></a>2.2 改进1–标记已求解</h3><p>把已经求出的中间问题标记起来，每当我们需要递归之前，先查询一下这个问题是否已经被解决，如果被解决，直接来拿用，如果没有，那么再进行递归，代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">int Fibonacci(int n)</span><br><span class="line">&#123;</span><br><span class="line">	if (n &lt; 1)</span><br><span class="line">		return 0;</span><br><span class="line">	int *flag = (int*)calloc((n + 1),sizeof(int));//动态初始化一个数组</span><br><span class="line">	return checker(flag, n);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">int checker(int* flag, int n)</span><br><span class="line">&#123;</span><br><span class="line">	if (n == 1 || n == 2)</span><br><span class="line">		return 1;</span><br><span class="line">	if (flag[n])//存在</span><br><span class="line">		return flag[n];</span><br><span class="line">	flag[n] = checker(flag,n-1) + checker(flag,n-2);//不存在则计算</span><br><span class="line">	return flag[n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个算法不存在重复计算子问题的说法，所以，它的时间复杂度就是 O(n)。</p>
-<h3 id="2-3-改进2–一维基本动态规划"><a href="#2-3-改进2–一维基本动态规划" class="headerlink" title="2.3 改进2–一维基本动态规划"></a>2.3 改进2–一维基本动态规划</h3><p>上述递归的做法是从n到1，2，既然有了这个思想，我们就可以从1，一直迭代到n，也就是基本动态规划的思想。代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">int Fibonacci(int n)</span><br><span class="line">&#123;</span><br><span class="line">	int* dp = (int*)calloc(n, sizeof(int));</span><br><span class="line">	if (n == 1||n==2)</span><br><span class="line">		return 1;</span><br><span class="line">	dp[0] = dp[1] = 1;</span><br><span class="line">	for (int i = 2; i &lt; n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		dp[i] = dp[i - 1] + dp[i - 2];</span><br><span class="line">	&#125;</span><br><span class="line">	return dp[n-1];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-4-改进3–优化的动态规划"><a href="#2-4-改进3–优化的动态规划" class="headerlink" title="2.4 改进3–优化的动态规划"></a>2.4 改进3–优化的动态规划</h3><p>可以思考一下用这个长度为n的数组的目的，就是为了记录每一次迭代出来的值，但实际上我们使用了所有的值嘛，并没有，我们在一次循环中，只使用了两个dp数组中的值，这两个值其实是可以用变量来代替的，只需要不断的更新就行了，这样，空间复杂度就可以降为 O(1)。代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">int Fibonacci(int n)</span><br><span class="line">&#123;</span><br><span class="line">	if (n == 1 || n == 2)</span><br><span class="line">		return 1;</span><br><span class="line">	int pre=1, cur=1;//前两次迭代的结果和前一次迭代的结果</span><br><span class="line">	int sum;//本次的值</span><br><span class="line">	for (int i = 2; i &lt; n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		sum = pre + cur;</span><br><span class="line">		pre = cur;</span><br><span class="line">		cur = sum;</span><br><span class="line">	&#125;</span><br><span class="line">	return cur;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这样的动态规划算法时间和空间复杂度就最低，优化到了极致。这样使用的动态规划，才是真的用好了动态规划！！！</p>
-<h2 id="启发"><a href="#启发" class="headerlink" title="启发"></a>启发</h2><ol>
-<li>动态规划其实就是解决最小重叠子问题的一个方法。</li>
-<li>动态规划的关键是找准迭代表达式（也叫状态转移方程）和初始条件（也叫基准）。</li>
-<li>迭代表达式可以从递归中获取思路。</li>
-<li>初始条件往往是递归从后向前的结束条件。</li>
-<li>递归优化的过程，就是动态规划的逆向过程。</li>
-<li>动态规划的空间复杂度往往是可以考虑优化的。</li>
-</ol>
-<p>利用最优动态规划来输出斐波拉契数列，代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#define N 6		//宏定义</span><br><span class="line">int Fibonacci(int n)&#123;</span><br><span class="line">	if(n==1||n==2)</span><br><span class="line">		return 1;</span><br><span class="line">	int pre=1,cur=1;	//前两次迭代的结果和前一次迭代的结果</span><br><span class="line">	int sum;	//本次的值</span><br><span class="line">	for(int i=2;i&lt;n;i++)&#123;</span><br><span class="line">		sum=pre+cur;</span><br><span class="line">		pre=cur;</span><br><span class="line">		cur=sum;</span><br><span class="line">	&#125;</span><br><span class="line">	return cur; </span><br><span class="line">&#125;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int out=Fibonacci(N);</span><br><span class="line">	printf(&quot;%d&quot;,out);</span><br><span class="line">	//将Fibonacci输出</span><br><span class="line">	int a[N];</span><br><span class="line">	for(int j=0;j&lt;N;j++)&#123;</span><br><span class="line">		a[j]=Fibonacci(j+1);	//这里是因为斐波那契数列从1开始，1 1 2 3 5... </span><br><span class="line">	&#125;</span><br><span class="line">	printf(&quot;\n---------\n&quot;);</span><br><span class="line">	for(int j=0;j&lt;N;j++)&#123;</span><br><span class="line">		printf(&quot;%d &quot;,a[j]);</span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="3-零钱兑换问题"><a href="#3-零钱兑换问题" class="headerlink" title="3.零钱兑换问题"></a>3.<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/coin-change/">零钱兑换问题</a></h2><p>给你一个整数数组 coins ，表示不同面额的硬币；以及一个整数 amount ，表示总金额。<br>计算并返回可以凑成总金额所需的 最少的硬币个数 。如果没有任何一种硬币组合能组成总金额，返回 -1 。<br>你可以认为每种硬币的数量是无限的。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line">输入：coins = [1, 2, 5], amount = 11</span><br><span class="line">输出：3 </span><br><span class="line">解释：11 = 5 + 5 + 1</span><br></pre></td></tr></table></figure>
-
-<p><strong>规律：凑齐的钱数=1个硬币面值+（凑齐的总钱数-当前硬币面值）</strong><br><strong>那么：凑齐前钱数的硬币数=1个硬币+凑齐[总钱数-硬币面值]所需的最小硬币数</strong><br><strong>由于硬币面值有多个，因此：凑齐钱数的硬币数=[1个硬币+凑齐[总钱数-当前硬币面值]所需的最小硬币数]的最小值</strong><br>分析如图：</p>
-<div align="center">
-<li>图1</li>
-<img src="/2022/08/26/%E5%8A%9B%E6%89%A3/零钱兑换01.jpg" width="65%">
-<br><br>
-<li>图2</li>
-<img src="/2022/08/26/%E5%8A%9B%E6%89%A3/零钱兑换02.jpg" width="65%">
-</div> 
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">  #include&lt;stdio.h&gt;</span><br><span class="line">  #define N 3	//自定义有多少不同面额的硬币</span><br><span class="line">  #include &lt;limits.h&gt;	//这个头文件里面有最大值INT_MAX=2^31-1和最小值INT_MIN**</span><br><span class="line">  int min_fun(int a,int b)&#123;	//自定义最小函数</span><br><span class="line">  	int c;</span><br><span class="line">  	c=a&lt;b?a:b;</span><br><span class="line">  	return c;</span><br><span class="line">  &#125; </span><br><span class="line">  int coinChange(int* coins,int coinsSize, int amount)&#123;	//动态规划整体</span><br><span class="line">  	int f[amount+1];	//存放每次兑换面额amount所需的最少硬币数的数组，因为用到面额0的情况，所以数组大小+1</span><br><span class="line">  	f[0]=0;		//后期迭代会用到f[0]，兑换面额为0所需最少硬币数为0 </span><br><span class="line">  	for(int i=1;i&lt;=amount;i++)&#123;		//从1到目标金额循环 </span><br><span class="line">  		f[i]=INT_MAX;	//因为求最少硬币数，INT_MAX表示所有数，是最大的，取不到</span><br><span class="line">  		for(int j=0;j&lt;coinsSize;j++)&#123;	//从小到大遍历硬币面额</span><br><span class="line">  			if(i&gt;=coins[j]&amp;&amp;f[i-coins[j]]!=INT_MAX)&#123;//f[i-coins[j]]最少用多少枚硬币拼出i-a[j]</span><br><span class="line">  				f[i]=min_fun(f[i],f[i-coins[j]]+1);</span><br><span class="line">  			&#125; </span><br><span class="line">  		&#125;</span><br><span class="line">  	&#125;</span><br><span class="line">  	if(f[amount]==INT_MAX)&#123;</span><br><span class="line">  		f[amount]=-1;</span><br><span class="line">  	&#125;</span><br><span class="line">  	return f[amount]; 	//f[amount]表示兑换面额amount所需的最少硬币</span><br><span class="line">  &#125;</span><br><span class="line">  int main()&#123;		//主函数</span><br><span class="line">  	int coins[N];</span><br><span class="line">  	printf(&quot;请输入不同面额的硬币\n&quot;);</span><br><span class="line">  	for(int i=0;i&lt;N;i++)&#123;</span><br><span class="line">  		scanf(&quot;%d&quot;,&amp;coins[i]);</span><br><span class="line">  	&#125;</span><br><span class="line">  	printf(&quot;请输入要兑换的金额\n&quot;);</span><br><span class="line">int amount;</span><br><span class="line">  	scanf(&quot;%d&quot;,&amp;amount);</span><br><span class="line">  	int out=coinChange(coins,N,amount);</span><br><span class="line">  	printf(&quot;凑成总金额%d所需的最少的硬币个数为：%d\n&quot;,amount,out);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="动态规划的基本思想"><a href="#动态规划的基本思想" class="headerlink" title="动态规划的基本思想"></a>动态规划的基本思想</h3><p><strong>什么问题可以用动态规划解决？</strong></p>
-<ol>
-<li>存在最优子结构，子问题相互独立。</li>
-<li>遇到找不到最优子结构时，可以适当变换问题思路再来寻找。</li>
-<li>巧妙的抓住，最值 这个关键字。</li>
-</ol>
-<p><strong>解决动态规划问题可尝试的基本思路</strong></p>
-<ol>
-<li>如果一下子无法找到动态规划的关键，可以一步一步的去尝试。</li>
-<li>可以先用最简单的思路写出暴力递归的方法。</li>
-<li>然后用标志变量，记忆化搜索。</li>
-<li>最后，找到合适的动态规划思路。</li>
-</ol>
-<p><strong>动态规划的基本步骤</strong></p>
-<ol>
-<li>找准状态，简单来说，就是 DP[i] 的含义，你赋予它什么含义，就是什么含义。</li>
-<li>找到状态转移方程，也就是迭代表达式，通常可以用具体的数据去打开你的思维。</li>
-<li>找到基准条件，也就是初始条件，自下而上的一般是前几个值，自上而下的一般是后几个值。</li>
-<li>使用合适的循环条件，将这一思想用代码呈现出来。</li>
-</ol>
-<p><strong>动态规划的dp遍历</strong></p>
-<ol>
-<li>需要保证在你遍历时，你所用到之前的条件已经被正确计算。</li>
-<li>需要保证你遍历的末尾，就是你所需要的答案。</li>
-</ol>
-<hr>
-<h2 id="4-零钱兑换Ⅱ"><a href="#4-零钱兑换Ⅱ" class="headerlink" title="4.零钱兑换Ⅱ"></a>4.<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/coin-change-2/">零钱兑换Ⅱ</a></h2><p>给你一个整数数组 coins 表示不同面额的硬币，另给一个整数 amount 表示总金额。<br>请你计算并返回可以凑成总金额的硬币组合数。如果任何硬币组合都无法凑出总金额，返回 0 。<br>假设每一种面额的硬币有无限个。 <br>题目数据保证结果符合 32 位带符号整数。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line">输入：amount = 5, coins = [1, 2, 5]</span><br><span class="line">输出：4</span><br><span class="line">解释：有四种方式可以凑成总金额：</span><br><span class="line">5=5</span><br><span class="line">5=2+2+1</span><br><span class="line">5=2+1+1+1</span><br><span class="line">5=1+1+1+1+1</span><br></pre></td></tr></table></figure>
-
-<p>分析：对于面额为coin的硬币,当coin≤i≤amount时,如果存在一种硬币组合的金额之和等于i-coin,则在该硬币组合中增加1个面额为coin的硬币,即可得到一种金额之和等于i的硬币组合.因此需要遍历coins，对于其中的每一种面额的硬币，更新数组dp中的每个大于或等于该面额的元素的值。<br>由此可以得到动态规划的做法:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">初始化 dp[0]=1;当不选取任何硬币时，金额之和才为0，因此只有1种硬币组合。</span><br><span class="line">遍历 coins，对于其中的每个元素 coin，进行如下操作：</span><br><span class="line">   	遍历 i 从coin 到 amount，将dp[i-coin] 的值加到 dp[i]。</span><br><span class="line">最终得到 dp[amount] 的值即为答案。</span><br></pre></td></tr></table></figure>
-
-<l>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt; </span><br><span class="line">#define N 3	//宏定义硬币面额数 </span><br><span class="line">#include&lt;string.h&gt;	//里面有memset函数,将某一块内存中的内容全部设置为指定的值 </span><br><span class="line"></span><br><span class="line">int Change(int amount,int* coins,int coinsSize)&#123;</span><br><span class="line">	int dp[amount+1];	//dp[i]表示凑成i的硬币组合数,需要知道凑成i-1,i-2...0的硬币组合数 </span><br><span class="line">	memset(dp,0,sizeof(dp));	//初始化dp[1],dp[2]...dp[amount]=0 </span><br><span class="line">	dp[0]=1;	//当不选取任何硬币时，金额之和才为0，因此只有1种硬币组合。</span><br><span class="line">	for(int i=0;i&lt;coinsSize;i++)&#123;	//例如面额为[1,2,5]时 </span><br><span class="line">		for(int j=coins[i];j&lt;=amount;j++)&#123;	//遍历i从coin到amount</span><br><span class="line">			dp[j]=dp[j]+dp[j-coins[i]];		//将dp[i-coin]的值加到dp[i]</span><br><span class="line">			//例如求dp[1],dp[1]对应为0,dp[1-coin[0]]=dp[0]=1--&gt;dp[1]=1</span><br><span class="line">			//dp[2],dp[2]对应0,dp[2-coin[0]]=dp[1]=1--&gt;dp[2]=1再遍历,dp[2-coin[1]]=dp[0]=1--&gt;dp[2]=1+1=2</span><br><span class="line">			//... </span><br><span class="line">		&#125;</span><br><span class="line">	&#125; </span><br><span class="line">	return dp[amount];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	int coins[N];</span><br><span class="line">	printf(&quot;请输入不同面额的硬币\n&quot;);</span><br><span class="line">	for(int i=0;i&lt;N;i++)&#123;</span><br><span class="line">		scanf(&quot;%d&quot;,&amp;coins[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	int amount;</span><br><span class="line">	printf(&quot;请输入要兑换的金额\n&quot;);</span><br><span class="line">	scanf(&quot;%d&quot;,&amp;amount);</span><br><span class="line">	int out=Change(amount,coins,N);</span><br><span class="line">	printf(&quot;凑成总金额%d的硬币组合数为：%d\n&quot;,amount,out);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="5-最长上升子序列"><a href="#5-最长上升子序列" class="headerlink" title="5.最长上升子序列"></a>5.<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/longest-increasing-subsequence/">最长上升子序列</a></h2></l>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">精选基础算法100题（面试必备）</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2022/08/26/%E5%8A%9B%E6%89%A3/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-我的第一篇博客" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -329,6 +175,9 @@
     </h1>
   
 
+        <!--显示阅读次数-->
+        
+       <!--显示阅读次数完毕-->
         
         <a href="/2022/07/05/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" class="archive-article-date">
   	<time datetime="2022-07-04T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-07-05</time>
@@ -474,6 +323,9 @@
     </h1>
   
 
+        <!--显示阅读次数-->
+        
+       <!--显示阅读次数完毕-->
         
         <a href="/2022/07/01/hello-world/" class="archive-article-date">
   	<time datetime="2022-07-01T15:32:23.440Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-07-01</time>
@@ -629,10 +481,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">精选基础算法100题（面试必备）</a>
-              </li>
             
             <div class="clearfix"></div>
           </ul>
